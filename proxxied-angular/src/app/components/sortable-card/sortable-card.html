@@ -1,0 +1,91 @@
+<div
+  class="bg-black relative group"
+  [style.width.mm]="totalCardWidth"
+  [style.height.mm]="totalCardHeight"
+  (click)="openArtworkModal()"
+  (contextmenu)="onContextMenu($event)"
+>
+  <img
+    [src]="imageSrc"
+    class="cursor-pointer block"
+  />
+
+  <!-- ⠿ Drag Handle -->
+  <div
+    cdkDragHandle
+    class="absolute right-[4px] top-1 w-4 h-4 bg-white text-green text-xs rounded-sm flex items-center justify-center cursor-move group-hover:opacity-100 opacity-50"
+    title="Drag"
+  >
+    ⠿
+  </div>
+
+  <div *ngIf="bleedEdge()">
+    <div
+      class="absolute"
+      [style.top]="guideOffset()"
+      [style.left]="guideOffset()"
+      [style.width.px]="guideWidth()"
+      [style.height.mm]="2"
+      [style.backgroundColor]="guideColor()"
+    ></div>
+    <div
+      class="absolute"
+      [style.top]="guideOffset()"
+      [style.left]="guideOffset()"
+      [style.width.mm]="2"
+      [style.height.px]="guideWidth()"
+      [style.backgroundColor]="guideColor()"
+    ></div>
+
+    <div
+      class="absolute"
+      [style.top]="guideOffset()"
+      [style.right]="guideOffset()"
+      [style.width.px]="guideWidth()"
+      [style.height.mm]="2"
+      [style.backgroundColor]="guideColor()"
+    ></div>
+    <div
+      class="absolute"
+      [style.top]="guideOffset()"
+      [style.right]="guideOffset()"
+      [style.width.mm]="2"
+      [style.height.px]="guideWidth()"
+      [style.backgroundColor]="guideColor()"
+    ></div>
+
+    <div
+      class="absolute"
+      [style.bottom]="guideOffset()"
+      [style.left]="guideOffset()"
+      [style.width.px]="guideWidth()"
+      [style.height.mm]="2"
+      [style.backgroundColor]="guideColor()"
+    ></div>
+    <div
+      class="absolute"
+      [style.bottom]="guideOffset()"
+      [style.left]="guideOffset()"
+      [style.width.mm]="2"
+      [style.height.px]="guideWidth()"
+      [style.backgroundColor]="guideColor()"
+    ></div>
+
+    <div
+      class="absolute"
+      [style.bottom]="guideOffset()"
+      [style.right]="guideOffset()"
+      [style.width.px]="guideWidth()"
+      [style.height.mm]="2"
+      [style.backgroundColor]="guideColor()"
+    ></div>
+    <div
+      class="absolute"
+      [style.bottom]="guideOffset()"
+      [style.right]="guideOffset()"
+      [style.width.mm]="2"
+      [style.height.px]="guideWidth()"
+      [style.backgroundColor]="guideColor()"
+    ></div>
+  </div>
+</div>

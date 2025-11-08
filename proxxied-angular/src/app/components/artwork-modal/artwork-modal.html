@@ -1,0 +1,59 @@
+<div *ngIf="state().open" class="fixed inset-0 z-50 bg-gray-900/50 flex items-center justify-center">
+  <div class="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-96 text-center">
+    <div class="mb-4 text-lg font-semibold text-gray-800 dark:text-white">
+      Select Artwork
+    </div>
+    <div class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+      <div class="mb-4">
+        <input
+          type="text"
+          class="w-full rounded-md bg-gray-200 dark:bg-gray-700 p-2"
+          placeholder="Replace with a different card..."
+          [(ngModel)]="searchQuery"
+          (keydown.enter)="search()"
+        />
+      </div>
+
+      <div *ngIf="state().card">
+        <div class="flex items-center gap-2 mb-4">
+          <input
+            type="checkbox"
+            id="apply-to-all"
+            [(ngModel)]="applyToAll"
+          />
+          <label for="apply-to-all">
+            Apply to all cards named "{{ state().card?.name }}"
+          </label>
+        </div>
+
+        <div class="grid grid-cols-3 md:grid-cols-3 gap-4">
+          <img
+            *ngFor="let pngUrl of state().card?.imageUrls"
+            [src]="pngUrl"
+            loading="lazy"
+            class="w-full cursor-pointer border-4"
+            [class.border-green-500]="originalSelectedImages()[state().card?.uuid!] === pngUrl"
+            [class.border-transparent]="originalSelectedImages()[state().card?.uuid!] !== pngUrl"
+            (click)="selectImage(pngUrl)"
+          />
+        </div>
+
+        <button
+          class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+          (click)="getMoreCards()"
+          [disabled]="isGettingMore"
+        >
+          {{ isGettingMore ? "Loading prints..." : "Get All Prints" }}
+        </button>
+      </div>
+    </div>
+    <div class="flex justify-center gap-4">
+      <button
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+        (click)="closeModal()"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

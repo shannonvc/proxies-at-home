@@ -4,7 +4,7 @@ This document outlines the plan to migrate the Proxxied React application to Ang
 
 ## 1. Project Setup
 
-1.  **Create a new Angular workspace:**
+1.  **[x] Create a new Angular workspace:**
     ```bash
     ng new proxxied-angular --standalone --routing --style=scss --ssr=false
     ```
@@ -13,7 +13,7 @@ This document outlines the plan to migrate the Proxxied React application to Ang
     *   `--style=scss`: Use SCSS for styling.
     *   `--ssr=false`: We can add SSR later if needed.
 
-2.  **Install dependencies:**
+2.  **[x] Install dependencies:**
     *   **UI Framework:** Since the project uses TailwindCSS and Flowbite, we will use the same.
         ```bash
         npm install -D tailwindcss postcss autoprefixer
@@ -50,14 +50,14 @@ This document outlines the plan to migrate the Proxxied React application to Ang
 ### Phase 1: Core Setup and Layout
 
 1.  **Setup TailwindCSS and Flowbite:** Configure styling to match the current application.
-2.  **Create the main layout:** Create a main `AppComponent` that will hold the main layout, including the header, sidebar, and main content area.
-3.  **Setup routing:** Create the basic routes for the application. The main page will be the `ProxyBuilderPage`.
+2.  **[x] Create the main layout:** Create a main `AppComponent` that will hold the main layout, including the header, sidebar, and main content area.
+3.  **[x] Setup routing:** Create the basic routes for the application. The main page will be the `ProxyBuilderPage`.
 
 ### Phase 2: Feature Migration
 
 This will be an iterative process of migrating each feature from the React application to the new Angular application.
 
-1.  **State Management (`/store`):**
+1.  **[x] State Management (`/store`):**
     *   `settings.ts`: Create a `SettingsService` that uses signals to manage the application settings.
     *   `cards.ts`: Create a `CardsService` to manage the card list, including fetching, adding, and removing cards.
     *   `loading.ts`: Create a `LoadingService` to manage the loading state of the application.
