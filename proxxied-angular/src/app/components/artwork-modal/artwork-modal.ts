@@ -16,8 +16,8 @@ export class ArtworkModalComponent {
   private artworkModalService = inject(ArtworkModalService);
   private cardsService = inject(CardsService);
 
-  state = this.artworkModalService.state.asReadonly();
-  originalSelectedImages = this.cardsService.state.asReadonly().originalSelectedImages;
+  state = this.artworkModalService.state;
+  originalSelectedImages = this.cardsService.state;
 
   isGettingMore = false;
   searchQuery = '';

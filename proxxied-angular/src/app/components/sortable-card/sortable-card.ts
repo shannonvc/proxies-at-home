@@ -22,10 +22,10 @@ export class SortableCardComponent {
 
   contextmenu = output<MouseEvent>();
 
-  bleedEdge = this.settingsService.state.asReadonly().bleedEdge;
-  guideWidth = this.settingsService.state.asReadonly().guideWidth;
-  guideColor = this.settingsService.state.asReadonly().guideColor;
-  bleedEdgeWidth = this.settingsService.state.asReadonly().bleedEdgeWidth;
+  bleedEdge = computed(() => this.settingsService.state().bleedEdge);
+  guideWidth = computed(() => this.settingsService.state().guideWidth);
+  guideColor = computed(() => this.settingsService.state().guideColor);
+  bleedEdgeWidth = computed(() => this.settingsService.state().bleedEdgeWidth);
 
   guideOffset = computed(() => `${(this.bleedEdgeWidth() * (25.4 / 300)).toFixed(3)}mm`);
 

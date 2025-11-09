@@ -24,17 +24,17 @@ export class PageViewComponent {
   private cardsService = inject(CardsService);
   private artworkModalService = inject(ArtworkModalService);
 
-  pageSizeUnit = this.settingsService.state.asReadonly().pageSizeUnit;
-  pageWidth = this.settingsService.state.asReadonly().pageWidth;
-  pageHeight = this.settingsService.state.asReadonly().pageHeight;
-  columns = this.settingsService.state.asReadonly().columns;
-  rows = this.settingsService.state.asReadonly().rows;
-  bleedEdgeWidth = this.settingsService.state.asReadonly().bleedEdgeWidth;
-  zoom = this.settingsService.state.asReadonly().zoom;
-  cardSpacingMm = this.settingsService.state.asReadonly().cardSpacingMm;
+  pageSizeUnit = computed(() => this.settingsService.state().pageSizeUnit);
+  pageWidth = computed(() => this.settingsService.state().pageWidth);
+  pageHeight = computed(() => this.settingsService.state().pageHeight);
+  columns = computed(() => this.settingsService.state().columns);
+  rows = computed(() => this.settingsService.state().rows);
+  bleedEdgeWidth = computed(() => this.settingsService.state().bleedEdgeWidth);
+  zoom = computed(() => this.settingsService.state().zoom);
+  cardSpacingMm = computed(() => this.settingsService.state().cardSpacingMm);
 
-  cards = this.cardsService.state.asReadonly().cards;
-  selectedImages = this.cardsService.state.asReadonly().selectedImages;
+  cards = computed(() => this.cardsService.state().cards);
+  selectedImages = computed(() => this.cardsService.state().selectedImages);
 
   totalCardWidth = computed(() => baseCardWidthMm + this.bleedEdgeWidth() * 2);
   totalCardHeight = computed(() => baseCardHeightMm + this.bleedEdgeWidth() * 2);
@@ -79,6 +79,13 @@ export class PageViewComponent {
 
   deleteCard(index: number) {
     this.cardsService.removeCardAt(index);
+  }
+
+  baseCardWidthMm = baseCardWidthMm;
+  baseCardHeightMm = baseCardHeightMm;
+
+  hideContextMenu() {
+    this.contextMenu.set({ ...this.contextMenu(), visible: false });
   }
 
   onContextMenu(event: MouseEvent, index: number) {

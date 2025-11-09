@@ -32,8 +32,8 @@
             [src]="pngUrl"
             loading="lazy"
             class="w-full cursor-pointer border-4"
-            [class.border-green-500]="originalSelectedImages()[state().card?.uuid!] === pngUrl"
-            [class.border-transparent]="originalSelectedImages()[state().card?.uuid!] !== pngUrl"
+            [class.border-green-500]="originalSelectedImages().originalSelectedImages[state().card?.uuid!] === pngUrl"
+            [class.border-transparent]="originalSelectedImages().originalSelectedImages[state().card?.uuid!] !== pngUrl"
             (click)="selectImage(pngUrl)"
           />
         </div>

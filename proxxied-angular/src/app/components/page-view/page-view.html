@@ -17,23 +17,23 @@
 
   <div #pageRef class="flex flex-col gap-[1rem]">
     <div
-      *ngIf="contextMenu.visible && contextMenu.cardIndex !== null"
+      *ngIf="contextMenu().visible && contextMenu().cardIndex !== null"
       class="absolute bg-white border rounded-xl border-gray-300 shadow-md z-50 text-sm flex flex-col gap-1"
-      [style.top.px]="contextMenu.y"
-      [style.left.px]="contextMenu.x"
+      [style.top.px]="contextMenu().y"
+      [style.left.px]="contextMenu().x"
       style="padding: 0.25rem;"
-      (mouseleave)="contextMenu.visible = false"
+      (mouseleave)="hideContextMenu()"
     >
       <button
         class="text-sm"
-        (click)="duplicateCard(contextMenu.cardIndex!)"
+        (click)="duplicateCard(contextMenu().cardIndex!)"
       >
         <!-- <Copy class="size-3 mr-1" /> -->
         Duplicate
       </button>
       <button
         class="text-sm text-red-500"
-        (click)="deleteCard(contextMenu.cardIndex!)"
+        (click)="deleteCard(contextMenu().cardIndex!)"
       >
         <!-- <Trash class="size-3 mr-1" /> -->
         Delete
@@ -45,7 +45,7 @@
       class="flex flex-col gap-[1rem]"
     >
       <div
-        *ngFor="let page of chunkedCards; let pageIndex = index"
+        *ngFor="let page of chunkedCards(); let pageIndex = index"
         class="proxy-page relative bg-white dark:bg-gray-700"
         [style.zoom]="zoom()"
         [style.width]="pageWidth() + pageSizeUnit()"

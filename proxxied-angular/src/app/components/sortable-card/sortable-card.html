@@ -1,12 +1,12 @@
 <div
   class="bg-black relative group"
-  [style.width.mm]="totalCardWidth"
-  [style.height.mm]="totalCardHeight"
+  [style.width.mm]="totalCardWidth()"
+  [style.height.mm]="totalCardHeight()"
   (click)="openArtworkModal()"
   (contextmenu)="onContextMenu($event)"
 >
   <img
-    [src]="imageSrc"
+    [src]="imageSrc()"
     class="cursor-pointer block"
   />
 

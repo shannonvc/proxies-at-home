@@ -17,14 +17,14 @@ export class EdgeCutLinesComponent {
   baseCardHeightMm = input.required<number>();
   bleedEdgeWidthMm = input.required<number>();
 
-  bleedEdge = this.settingsService.state.asReadonly().bleedEdge;
-  guideWidth = this.settingsService.state.asReadonly().guideWidth;
-  pageSizeUnit = this.settingsService.state.asReadonly().pageSizeUnit;
-  pageWidth = this.settingsService.state.asReadonly().pageWidth;
-  pageHeight = this.settingsService.state.asReadonly().pageHeight;
-  columns = this.settingsService.state.asReadonly().columns;
-  rows = this.settingsService.state.asReadonly().rows;
-  cardSpacingMm = this.settingsService.state.asReadonly().cardSpacingMm;
+  bleedEdge = computed(() => this.settingsService.state().bleedEdge);
+  guideWidth = computed(() => this.settingsService.state().guideWidth);
+  pageSizeUnit = computed(() => this.settingsService.state().pageSizeUnit);
+  pageWidth = computed(() => this.settingsService.state().pageWidth);
+  pageHeight = computed(() => this.settingsService.state().pageHeight);
+  columns = computed(() => this.settingsService.state().columns);
+  rows = computed(() => this.settingsService.state().rows);
+  cardSpacingMm = computed(() => this.settingsService.state().cardSpacingMm);
 
   pageWidthMm = computed(() => this.pageSizeUnit() === 'mm' ? this.pageWidth() : this.pageWidth() * 25.4);
   pageHeightMm = computed(() => this.pageSizeUnit() === 'mm' ? this.pageHeight() : this.pageHeight() * 25.4);

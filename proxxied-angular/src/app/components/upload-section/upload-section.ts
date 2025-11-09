@@ -8,7 +8,8 @@ import { LANGUAGE_OPTIONS } from '../../constants';
 import { CardOption } from '../../store/card.types';
 import axios from 'axios';
 import { imageProcessor } from '../../helpers/imageProcessor';
-import { inferCardNameFromFilename } from '../../helpers/Mpc';
+import { getMpcImageUrl, inferCardNameFromFilename, parseMpcText, tryParseMpcSchemaXml } from '../../helpers/Mpc';
+import { cardKey, CardInfo, parseDeckToInfos } from '../../helpers/CardInfoHelper';
 
 @Component({
   selector: 'app-upload-section',

@@ -8,6 +8,6 @@ import { PageViewComponent } from '../../components/page-view/page-view';
   templateUrl: './proxy-builder-page.html',
   styleUrl: './proxy-builder-page.scss',
 })
-export class ProxyBuilderPage {
+export class ProxyBuilderPageComponent {
 
 }

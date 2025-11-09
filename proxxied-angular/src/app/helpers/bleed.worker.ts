@@ -1,5 +1,3 @@
-declare const self: DedicatedWorkerGlobalScope;
-
 let API_BASE = "";
 const DPI = 300;
 const IN = (inches: number) => Math.round(inches * DPI);
