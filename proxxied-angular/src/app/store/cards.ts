@@ -54,4 +54,18 @@ export class CardsService {
       return { ...state, cards };
     });
   }
+
+  appendOriginalSelectedImages(newImages: Record<string, string>) {
+    this._state.update(state => ({
+      ...state,
+      originalSelectedImages: { ...state.originalSelectedImages, ...newImages },
+    }));
+  }
+
+  appendSelectedImages(newImages: Record<string, string>) {
+    this._state.update(state => ({
+      ...state,
+      selectedImages: { ...state.selectedImages, ...newImages },
+    }));
+  }
 }
