@@ -8,9 +8,8 @@ describe('ProxyBuilderPage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProxyBuilderPage]
-    })
-    .compileComponents();
+      imports: [ProxyBuilderPage],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProxyBuilderPage);
     component = fixture.componentInstance;

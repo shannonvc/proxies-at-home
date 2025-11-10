@@ -31,24 +31,22 @@ export class CardsService {
   state = this._state.asReadonly();
 
   setCards(cards: CardOption[]) {
-    this._state.update(state => ({ ...state, cards }));
+    this._state.update((state) => ({ ...state, cards }));
   }
 
   appendCards(newCards: CardOption[]) {
-    this._state.update(state => ({ ...state, cards: [...state.cards, ...newCards] }));
+    this._state.update((state) => ({ ...state, cards: [...state.cards, ...newCards] }));
   }
 
   updateCard(pos: number, updatedCard: Partial<CardOption>) {
-    this._state.update(state => ({
+    this._state.update((state) => ({
       ...state,
-      cards: state.cards.map((card, index) =>
-        index === pos ? { ...card, ...updatedCard } : card
-      ),
+      cards: state.cards.map((card, index) => (index === pos ? { ...card, ...updatedCard } : card)),
     }));
   }
 
   removeCardAt(pos: number) {
-    this._state.update(state => {
+    this._state.update((state) => {
       const cards = [...state.cards];
       cards.splice(pos, 1);
       return { ...state, cards };
@@ -56,21 +54,21 @@ export class CardsService {
   }
 
   appendOriginalSelectedImages(newImages: Record<string, string>) {
-    this._state.update(state => ({
+    this._state.update((state) => ({
       ...state,
       originalSelectedImages: { ...state.originalSelectedImages, ...newImages },
     }));
   }
 
   appendSelectedImages(newImages: Record<string, string>) {
-    this._state.update(state => ({
+    this._state.update((state) => ({
       ...state,
       selectedImages: { ...state.selectedImages, ...newImages },
     }));
   }
 
   clearSelectedImage(uuid: string) {
-    this._state.update(state => {
+    this._state.update((state) => {
       const newSelected = { ...state.selectedImages };
       delete newSelected[uuid];
       return { ...state, selectedImages: newSelected };
@@ -78,7 +76,7 @@ export class CardsService {
   }
 
   clearManySelectedImages(uuids: string[]) {
-    this._state.update(state => {
+    this._state.update((state) => {
       const newSelected = { ...state.selectedImages };
       for (const uuid of uuids) delete newSelected[uuid];
       return { ...state, selectedImages: newSelected };

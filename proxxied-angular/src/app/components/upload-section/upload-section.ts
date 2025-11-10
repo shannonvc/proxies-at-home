@@ -8,7 +8,12 @@ import { LANGUAGE_OPTIONS } from '../../constants';
 import { CardOption } from '../../store/card.types';
 import axios from 'axios';
 import { imageProcessor } from '../../helpers/imageProcessor';
-import { getMpcImageUrl, inferCardNameFromFilename, parseMpcText, tryParseMpcSchemaXml } from '../../helpers/Mpc';
+import {
+  getMpcImageUrl,
+  inferCardNameFromFilename,
+  parseMpcText,
+  tryParseMpcSchemaXml,
+} from '../../helpers/Mpc';
 import { cardKey, CardInfo, parseDeckToInfos } from '../../helpers/CardInfoHelper';
 import { environment } from '../../../environments/environment';
 
@@ -33,9 +38,7 @@ export class UploadSectionComponent {
     const startIndex = this.cardsService.state().cards.length;
 
     const newCards: CardOption[] = fileArray.map((file, i) => ({
-      name:
-        inferCardNameFromFilename(file.name) ||
-        `Custom Art ${startIndex + i + 1}`,
+      name: inferCardNameFromFilename(file.name) || `Custom Art ${startIndex + i + 1}`,
       imageUrls: [],
       uuid: crypto.randomUUID(),
       isUserUpload: true,
@@ -55,25 +58,19 @@ export class UploadSectionComponent {
           reader.readAsDataURL(file);
         });
 
-        const { originalBase64, withBleedBase64 } = await this.processToWithBleed(
-          base64,
-          opts
-        );
+        const { originalBase64, withBleedBase64 } = await this.processToWithBleed(base64, opts);
 
         const id = newCards[i].uuid;
         originalsUpdate[id] = originalBase64;
         processedUpdate[id] = withBleedBase64;
-      })
+      }),
     );
 
     this.cardsService.appendOriginalSelectedImages(originalsUpdate);
     this.cardsService.appendSelectedImages(processedUpdate);
   }
 
-  async processToWithBleed(
-    srcBase64: string,
-    opts: { hasBakedBleed: boolean }
-  ) {
+  async processToWithBleed(srcBase64: string, opts: { hasBakedBleed: boolean }) {
     const { processedBlob, error } = await imageProcessor.process({
       uuid: crypto.randomUUID(),
       url: srcBase64,
@@ -119,8 +116,7 @@ export class UploadSectionComponent {
       });
 
       const schemaItems = tryParseMpcSchemaXml(raw);
-      const items =
-        schemaItems && schemaItems.length ? schemaItems : parseMpcText(raw);
+      const items = schemaItems && schemaItems.length ? schemaItems : parseMpcText(raw);
 
       const newCards: CardOption[] = [];
       const newOriginals: Record<string, string> = {};
@@ -129,10 +125,7 @@ export class UploadSectionComponent {
         for (let i = 0; i < (it.qty || 1); i++) {
           const uuid = crypto.randomUUID();
           const name =
-            it.name ||
-            (it.filename
-              ? inferCardNameFromFilename(it.filename)
-              : 'Custom Art');
+            it.name || (it.filename ? inferCardNameFromFilename(it.filename) : 'Custom Art');
 
           newCards.push({
             uuid,
@@ -194,19 +187,16 @@ export class UploadSectionComponent {
         console.warn('[FetchCards] DELETE failed (continuing):', e);
       }
 
-      const response = await fetch(
-        `${environment.API_BASE}/api/cards/images/images-stream`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            cardQueries: uniqueInfos,
-            cardNames: uniqueNames,
-            cardArt: 'art',
-            language: this.globalLanguage,
-          }),
-        }
-      );
+      const response = await fetch(`${environment.API_BASE}/api/cards/images/images-stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cardQueries: uniqueInfos,
+          cardNames: uniqueNames,
+          cardArt: 'art',
+          language: this.globalLanguage,
+        }),
+      });
 
       if (!response.body) {
         throw new Error('Missing response body from stream');
@@ -234,8 +224,7 @@ export class UploadSectionComponent {
           } else if (line === '') {
             if (event === 'progress') {
               const { progress, total } = JSON.parse(data);
-              const percent =
-                total > 0 ? Math.round((progress / total) * 100) : 0;
+              const percent = total > 0 ? Math.round((progress / total) * 100) : 0;
               this.loadingService.setProgress(percent);
             } else if (event === 'card') {
               fetchedCards.push(JSON.parse(data));
@@ -255,9 +244,7 @@ export class UploadSectionComponent {
       if (!fetchedCards.length) {
         if (fetchErrors.length > 0) {
           throw new Error(
-            `Failed to find images for the following cards: ${fetchErrors.join(
-              ', '
-            )}`
+            `Failed to find images for the following cards: ${fetchErrors.join(', ')}`,
           );
         }
         throw new Error('No images found for the provided list.');
@@ -266,9 +253,7 @@ export class UploadSectionComponent {
       const optionByKey: Record<string, CardOption> = {};
       for (const opt of fetchedCards) {
         if (!opt?.name) continue;
-        const k = `${opt.name.toLowerCase()}|${opt.set ?? ''}|${
-          opt.number ?? ''
-        }`;
+        const k = `${opt.name.toLowerCase()}|${opt.set ?? ''}|${opt.number ?? ''}`;
         optionByKey[k] = opt;
         const nameOnlyKey = `${opt.name.toLowerCase()}||`;
         if (!optionByKey[nameOnlyKey]) optionByKey[nameOnlyKey] = opt;
@@ -307,18 +292,14 @@ export class UploadSectionComponent {
       const errored = new Set<string>();
       await new Promise<void>((resolve) => {
         const taskQueue = [...imageJobs];
-        const maxWorkers = Math.max(
-          1,
-          (navigator.hardwareConcurrency || 4) - 1
-        );
+        const maxWorkers = Math.max(1, (navigator.hardwareConcurrency || 4) - 1);
         let activeWorkers = 0;
 
         const run = () => {
           while (taskQueue.length > 0 && activeWorkers < maxWorkers) {
-            const worker = new Worker(
-              new URL('../../helpers/bleed.worker.ts', import.meta.url),
-              { type: 'module' }
-            );
+            const worker = new Worker(new URL('../../helpers/bleed.worker.ts', import.meta.url), {
+              type: 'module',
+            });
             activeWorkers++;
 
             const [uuid, url] = taskQueue.shift()!;
@@ -334,9 +315,7 @@ export class UploadSectionComponent {
               }
 
               processedCount++;
-              this.loadingService.setProgress(
-                (processedCount / totalToProcess) * 100
-              );
+              this.loadingService.setProgress((processedCount / totalToProcess) * 100);
 
               worker.terminate();
               activeWorkers--;

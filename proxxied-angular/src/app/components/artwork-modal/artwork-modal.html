@@ -1,8 +1,9 @@
-<div *ngIf="state().open" class="fixed inset-0 z-50 bg-gray-900/50 flex items-center justify-center">
+<div
+  *ngIf="state().open"
+  class="fixed inset-0 z-50 bg-gray-900/50 flex items-center justify-center"
+>
   <div class="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-96 text-center">
-    <div class="mb-4 text-lg font-semibold text-gray-800 dark:text-white">
-      Select Artwork
-    </div>
+    <div class="mb-4 text-lg font-semibold text-gray-800 dark:text-white">Select Artwork</div>
     <div class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
       <div class="mb-4">
         <input
@@ -16,14 +17,8 @@
 
       <div *ngIf="state().card">
         <div class="flex items-center gap-2 mb-4">
-          <input
-            type="checkbox"
-            id="apply-to-all"
-            [(ngModel)]="applyToAll"
-          />
-          <label for="apply-to-all">
-            Apply to all cards named "{{ state().card?.name }}"
-          </label>
+          <input type="checkbox" id="apply-to-all" [(ngModel)]="applyToAll" />
+          <label for="apply-to-all"> Apply to all cards named "{{ state().card?.name }}" </label>
         </div>
 
         <div class="grid grid-cols-3 md:grid-cols-3 gap-4">
@@ -32,8 +27,12 @@
             [src]="pngUrl"
             loading="lazy"
             class="w-full cursor-pointer border-4"
-            [class.border-green-500]="originalSelectedImages().originalSelectedImages[state().card?.uuid!] === pngUrl"
-            [class.border-transparent]="originalSelectedImages().originalSelectedImages[state().card?.uuid!] !== pngUrl"
+            [class.border-green-500]="
+              originalSelectedImages().originalSelectedImages[state().card?.uuid!] === pngUrl
+            "
+            [class.border-transparent]="
+              originalSelectedImages().originalSelectedImages[state().card?.uuid!] !== pngUrl
+            "
             (click)="selectImage(pngUrl)"
           />
         </div>
@@ -43,7 +42,7 @@
           (click)="getMoreCards()"
           [disabled]="isGettingMore"
         >
-          {{ isGettingMore ? "Loading prints..." : "Get All Prints" }}
+          {{ isGettingMore ? 'Loading prints...' : 'Get All Prints' }}
         </button>
       </div>
     </div>

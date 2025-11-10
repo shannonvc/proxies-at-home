@@ -1,5 +1,8 @@
 const maxWorkers = Math.max(1, (navigator.hardwareConcurrency || 4) - 1);
-const workers = Array.from({ length: maxWorkers }, () => new Worker(new URL('./bleed.worker.ts', import.meta.url), { type: 'module' }));
+const workers = Array.from(
+  { length: maxWorkers },
+  () => new Worker(new URL('./bleed.worker.ts', import.meta.url), { type: 'module' }),
+);
 const taskQueue: any[] = [];
 let idleWorkers = [...workers];
 
@@ -10,7 +13,7 @@ function returnWorkerToPool(worker: Worker) {
 
 async function runTask(task: any) {
   if (idleWorkers.length === 0) return; // Should not happen due to processNextTask check, but as a safeguard
-  
+
   const worker = idleWorkers.pop()!;
 
   worker.onmessage = (e: MessageEvent) => {
@@ -50,7 +53,7 @@ export const imageProcessor = {
     });
   },
   destroy: () => {
-    workers.forEach(w => w.terminate());
+    workers.forEach((w) => w.terminate());
     idleWorkers = [];
-  }
+  },
 };

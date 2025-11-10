@@ -7,15 +7,15 @@ export type CardInfo = {
 export function extractCardInfo(input: string): CardInfo {
   let s = input.trim();
 
-  s = s.replace(/^\s*\d+\s*x?\s+/i, "");
+  s = s.replace(/^\s*\d+\s*x?\s+/i, '');
 
   const caretTail = /\s*\^[^^]*\^\s*$/;
   const bracketTail = /\s*\[[^\]]*]\s*$/;
   let changed = true;
   while (changed) {
     const before = s;
-    s = s.replace(caretTail, "").trim();
-    s = s.replace(bracketTail, "").trim();
+    s = s.replace(caretTail, '').trim();
+    s = s.replace(bracketTail, '').trim();
     changed = s !== before;
   }
 
@@ -26,7 +26,7 @@ export function extractCardInfo(input: string): CardInfo {
   if (m) {
     setCode = m[1]?.toLowerCase();
     number = m[2] ?? undefined;
-    s = s.replace(setNumTail, "").trim();
+    s = s.replace(setNumTail, '').trim();
   }
 
   return { name: s, set: setCode, number };
@@ -52,5 +52,5 @@ export function parseDeckToInfos(deckText: string): CardInfo[] {
 }
 
 export function cardKey(ci: CardInfo): string {
-  return `${ci.name.toLowerCase()}|${ci.set ?? ""}|${ci.number ?? ""}`;
+  return `${ci.name.toLowerCase()}|${ci.set ?? ''}|${ci.number ?? ''}`;
 }

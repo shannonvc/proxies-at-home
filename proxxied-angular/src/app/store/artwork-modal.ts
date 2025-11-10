@@ -26,7 +26,7 @@ export class ArtworkModalService {
   state = this._state.asReadonly();
 
   openModal(data: ArtworkModalData) {
-    this._state.update(state => ({ ...state, open: true, card: data.card, index: data.index }));
+    this._state.update((state) => ({ ...state, open: true, card: data.card, index: data.index }));
   }
 
   closeModal() {
@@ -34,7 +34,7 @@ export class ArtworkModalService {
   }
 
   updateCard(updatedCard: Partial<CardOption>) {
-    this._state.update(state => {
+    this._state.update((state) => {
       if (!state.card) return state;
       return { ...state, card: { ...state.card, ...updatedCard } };
     });

@@ -8,9 +8,8 @@ describe('CardCellLazy', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CardCellLazy]
-    })
-    .compileComponents();
+      imports: [CardCellLazy],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CardCellLazy);
     component = fixture.componentInstance;

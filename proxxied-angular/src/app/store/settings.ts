@@ -10,7 +10,7 @@ export class SettingsService {
 
   setPageSizePreset(value: LayoutPreset) {
     const { pageWidth, pageHeight, pageSizeUnit } = layoutPresetsSizes[value];
-    this._state.update(state => ({
+    this._state.update((state) => ({
       ...state,
       pageSizePreset: value,
       pageOrientation: 'portrait', // always reset
@@ -21,7 +21,7 @@ export class SettingsService {
   }
 
   swapPageOrientation() {
-    this._state.update(state => ({
+    this._state.update((state) => ({
       ...state,
       pageOrientation: state.pageOrientation === 'portrait' ? 'landscape' : 'portrait',
       pageWidth: state.pageHeight,
@@ -30,47 +30,47 @@ export class SettingsService {
   }
 
   setColumns(columns: number) {
-    this._state.update(state => ({ ...state, columns }));
+    this._state.update((state) => ({ ...state, columns }));
   }
 
   setRows(rows: number) {
-    this._state.update(state => ({ ...state, rows }));
+    this._state.update((state) => ({ ...state, rows }));
   }
 
   setBleedEdgeWidth(bleedEdgeWidth: number) {
-    this._state.update(state => ({ ...state, bleedEdgeWidth }));
+    this._state.update((state) => ({ ...state, bleedEdgeWidth }));
   }
 
   setBleedEdge(bleedEdge: boolean) {
-    this._state.update(state => ({ ...state, bleedEdge }));
+    this._state.update((state) => ({ ...state, bleedEdge }));
   }
 
   setGuideColor(guideColor: string) {
-    this._state.update(state => ({ ...state, guideColor }));
+    this._state.update((state) => ({ ...state, guideColor }));
   }
 
   setGuideWidth(guideWidth: number) {
-    this._state.update(state => ({ ...state, guideWidth }));
+    this._state.update((state) => ({ ...state, guideWidth }));
   }
 
   setZoom(zoom: number) {
-    this._state.update(state => ({ ...state, zoom }));
+    this._state.update((state) => ({ ...state, zoom }));
   }
 
   setCardSpacingMm(cardSpacingMm: number) {
-    this._state.update(state => ({ ...state, cardSpacingMm: Math.max(0, cardSpacingMm) }));
+    this._state.update((state) => ({ ...state, cardSpacingMm: Math.max(0, cardSpacingMm) }));
   }
 
   setCardPositionX(cardPositionX: number) {
-    this._state.update(state => ({ ...state, cardPositionX }));
+    this._state.update((state) => ({ ...state, cardPositionX }));
   }
 
   setCardPositionY(cardPositionY: number) {
-    this._state.update(state => ({ ...state, cardPositionY }));
+    this._state.update((state) => ({ ...state, cardPositionY }));
   }
 
   setDpi(dpi: number) {
-    this._state.update(state => ({ ...state, dpi }));
+    this._state.update((state) => ({ ...state, dpi }));
   }
 
   resetSettings() {

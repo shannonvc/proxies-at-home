@@ -26,11 +26,22 @@ export class EdgeCutLinesComponent {
   rows = computed(() => this.settingsService.state().rows);
   cardSpacingMm = computed(() => this.settingsService.state().cardSpacingMm);
 
-  pageWidthMm = computed(() => this.pageSizeUnit() === 'mm' ? this.pageWidth() : this.pageWidth() * 25.4);
-  pageHeightMm = computed(() => this.pageSizeUnit() === 'mm' ? this.pageHeight() : this.pageHeight() * 25.4);
+  pageWidthMm = computed(() =>
+    this.pageSizeUnit() === 'mm' ? this.pageWidth() : this.pageWidth() * 25.4,
+  );
+  pageHeightMm = computed(() =>
+    this.pageSizeUnit() === 'mm' ? this.pageHeight() : this.pageHeight() * 25.4,
+  );
 
-  gridWidthMm = computed(() => this.columns() * this.totalCardWidthMm() + Math.max(0, this.columns() - 1) * this.cardSpacingMm());
-  gridHeightMm = computed(() => this.rows() * this.totalCardHeightMm() + Math.max(0, this.rows() - 1) * this.cardSpacingMm());
+  gridWidthMm = computed(
+    () =>
+      this.columns() * this.totalCardWidthMm() +
+      Math.max(0, this.columns() - 1) * this.cardSpacingMm(),
+  );
+  gridHeightMm = computed(
+    () =>
+      this.rows() * this.totalCardHeightMm() + Math.max(0, this.rows() - 1) * this.cardSpacingMm(),
+  );
 
   startXmm = computed(() => (this.pageWidthMm() - this.gridWidthMm()) / 2);
   startYmm = computed(() => (this.pageHeightMm() - this.gridHeightMm()) / 2);

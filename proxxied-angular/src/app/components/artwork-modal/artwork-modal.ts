@@ -27,7 +27,7 @@ export class ArtworkModalComponent {
 
   cardNamesToUuids = computed(() => {
     const map: Record<string, string[]> = {};
-    this.cardsService.state().cards.forEach(card => {
+    this.cardsService.state().cards.forEach((card) => {
       if (!map[card.name]) {
         map[card.name] = [];
       }
@@ -41,10 +41,10 @@ export class ArtworkModalComponent {
     if (!card) return;
     this.isGettingMore = true;
     try {
-      const res = await axios.post<CardOption[]>(
-        `${environment.API_BASE}/api/cards/images`,
-        { cardNames: [card.name], cardArt: 'prints' }
-      );
+      const res = await axios.post<CardOption[]>(`${environment.API_BASE}/api/cards/images`, {
+        cardNames: [card.name],
+        cardArt: 'prints',
+      });
 
       const urls = res.data?.[0]?.imageUrls ?? [];
       this.artworkModalService.updateCard({ imageUrls: urls });
@@ -58,10 +58,9 @@ export class ArtworkModalComponent {
     const modalIndex = this.state().index;
     if (!name || modalIndex === null) return;
 
-    const res = await axios.post<CardOption[]>(
-      `${environment.API_BASE}/api/cards/images`,
-      { cardNames: [name] }
-    );
+    const res = await axios.post<CardOption[]>(`${environment.API_BASE}/api/cards/images`, {
+      cardNames: [name],
+    });
 
     if (!res.data.length) return;
 

@@ -8,9 +8,8 @@ describe('EdgeCutLines', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EdgeCutLines]
-    })
-    .compileComponents();
+      imports: [EdgeCutLines],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EdgeCutLines);
     component = fixture.componentInstance;

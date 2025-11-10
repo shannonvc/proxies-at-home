@@ -36,9 +36,7 @@
       </div>
 
       <div class="space-y-1">
-        <h6 class="font-medium dark:text-white">
-          Import MPC Text (XML)
-        </h6>
+        <h6 class="font-medium dark:text-white">Import MPC Text (XML)</h6>
 
         <label
           for="import-mpc-xml"
@@ -109,10 +107,16 @@ or Repurposing Bay (dft) 380"
       </div>
 
       <div class="flex flex-col gap-2">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="handleSubmit()">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          (click)="handleSubmit()"
+        >
           Fetch Cards
         </button>
-        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" (click)="handleClear()">
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          (click)="handleClear()"
+        >
           Clear Cards
         </button>
       </div>
@@ -140,12 +144,8 @@ or Repurposing Bay (dft) 380"
 
         <ul class="text-sm dark:text-white/60 list-disc list-inside">
           <li>To change a card art - click it</li>
-          <li>
-            To move a card - drag from the box at the top right
-          </li>
-          <li>
-            To duplicate or delete a card - right click it
-          </li>
+          <li>To move a card - drag from the box at the top right</li>
+          <li>To duplicate or delete a card - right click it</li>
         </ul>
       </div>
     </div>
@@ -153,14 +153,16 @@ or Repurposing Bay (dft) 380"
     <hr class="my-0 dark:bg-gray-500" />
   </div>
 
-  <div *ngIf="showClearConfirmModal" class="fixed inset-0 z-50 bg-gray-900/50 flex items-center justify-center">
+  <div
+    *ngIf="showClearConfirmModal"
+    class="fixed inset-0 z-50 bg-gray-900/50 flex items-center justify-center"
+  >
     <div class="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-96 text-center">
       <div class="mb-4 text-lg font-semibold text-gray-800 dark:text-white">
         Confirm Clear Cards
       </div>
       <div class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-        Are you sure you want to clear all cards? This action cannot be
-        undone.
+        Are you sure you want to clear all cards? This action cannot be undone.
       </div>
       <div class="flex justify-center gap-4">
         <button

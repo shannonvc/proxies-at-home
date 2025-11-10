@@ -1,26 +1,34 @@
 <div *ngIf="bleedEdge()">
-  <div *ngFor="let x of xCuts()" class="absolute bg-black pointer-events-none"
+  <div
+    *ngFor="let x of xCuts()"
+    class="absolute bg-black pointer-events-none"
     [style.left.mm]="x"
     [style.top.mm]="0"
     [style.width.px]="guideWidth()"
-    [style.height.mm]="stubH()">
-  </div>
-  <div *ngFor="let x of xCuts()" class="absolute bg-black pointer-events-none"
+    [style.height.mm]="stubH()"
+  ></div>
+  <div
+    *ngFor="let x of xCuts()"
+    class="absolute bg-black pointer-events-none"
     [style.left.mm]="x"
     [style.top.mm]="pageHeightMm() - stubH()"
     [style.width.px]="guideWidth()"
-    [style.height.mm]="stubH()">
-  </div>
-  <div *ngFor="let y of yCuts()" class="absolute bg-black pointer-events-none"
+    [style.height.mm]="stubH()"
+  ></div>
+  <div
+    *ngFor="let y of yCuts()"
+    class="absolute bg-black pointer-events-none"
     [style.top.mm]="y"
     [style.left.mm]="0"
     [style.height.px]="guideWidth()"
-    [style.width.mm]="stubW()">
-  </div>
-  <div *ngFor="let y of yCuts()" class="absolute bg-black pointer-events-none"
+    [style.width.mm]="stubW()"
+  ></div>
+  <div
+    *ngFor="let y of yCuts()"
+    class="absolute bg-black pointer-events-none"
     [style.top.mm]="y"
     [style.left.mm]="pageWidthMm() - stubW()"
     [style.height.px]="guideWidth()"
-    [style.width.mm]="stubW()">
-  </div>
+    [style.width.mm]="stubW()"
+  ></div>
 </div>

@@ -28,14 +28,14 @@ export class LoadingService {
   state = this._state.asReadonly();
 
   setLoadingTask(loadingTask: LoadingTask) {
-    this._state.update(state => ({ ...state, loadingTask, progress: 0, onCancel: null }));
+    this._state.update((state) => ({ ...state, loadingTask, progress: 0, onCancel: null }));
   }
 
   setProgress(progress: number) {
-    this._state.update(state => ({ ...state, progress }));
+    this._state.update((state) => ({ ...state, progress }));
   }
 
   setOnCancel(onCancel: (() => void) | null) {
-    this._state.update(state => ({ ...state, onCancel }));
+    this._state.update((state) => ({ ...state, onCancel }));
   }
 }

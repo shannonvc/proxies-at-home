@@ -8,9 +8,8 @@ describe('PageView', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PageView]
-    })
-    .compileComponents();
+      imports: [PageView],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PageView);
     component = fixture.componentInstance;

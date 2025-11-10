@@ -1,14 +1,10 @@
-<div class="w-1/2 flex-1 overflow-y-auto bg-gray-200 h-full p-6 flex justify-center dark:bg-gray-800">
+<div
+  class="w-1/2 flex-1 overflow-y-auto bg-gray-200 h-full p-6 flex justify-center dark:bg-gray-800"
+>
   <div *ngIf="cards().length === 0" class="flex flex-col items-center">
     <div class="flex flex-row items-center">
-      <label class="text-7xl justify-center font-bold whitespace-nowrap">
-        Welcome to
-      </label>
-      <img
-        src="assets/fullLogo.png"
-        alt="Proxxied Logo"
-        class="h-36 mt-[1rem]"
-      />
+      <label class="text-7xl justify-center font-bold whitespace-nowrap"> Welcome to </label>
+      <img src="assets/fullLogo.png" alt="Proxxied Logo" class="h-36 mt-[1rem]" />
     </div>
     <label class="text-xl text-gray-600 justify-center">
       Enter a decklist to the left or Upload Files to get started
@@ -21,36 +17,36 @@
       class="absolute bg-white border rounded-xl border-gray-300 shadow-md z-50 text-sm flex flex-col gap-1"
       [style.top.px]="contextMenu().y"
       [style.left.px]="contextMenu().x"
-      style="padding: 0.25rem;"
+      style="padding: 0.25rem"
       (mouseleave)="hideContextMenu()"
     >
-      <button
-        class="text-sm"
-        (click)="duplicateCard(contextMenu().cardIndex!)"
-      >
+      <button class="text-sm" (click)="duplicateCard(contextMenu().cardIndex!)">
         <!-- <Copy class="size-3 mr-1" /> -->
         Duplicate
       </button>
-      <button
-        class="text-sm text-red-500"
-        (click)="deleteCard(contextMenu().cardIndex!)"
-      >
+      <button class="text-sm text-red-500" (click)="deleteCard(contextMenu().cardIndex!)">
         <!-- <Trash class="size-3 mr-1" /> -->
         Delete
       </button>
     </div>
 
-    <div
-      cdkDropListGroup
-      class="flex flex-col gap-[1rem]"
-    >
+    <div cdkDropListGroup class="flex flex-col gap-[1rem]">
       <div
         *ngFor="let page of chunkedCards(); let pageIndex = index"
         class="proxy-page relative bg-white dark:bg-gray-700"
         [style.zoom]="zoom()"
         [style.width]="pageWidth() + pageSizeUnit()"
         [style.height]="pageHeight() + pageSizeUnit()"
-        style="display: flex; flex-direction: column; justify-content: center; align-items: center; break-after: page; flex-shrink: 0; padding: 0; margin: 0;"
+        style="
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          break-after: page;
+          flex-shrink: 0;
+          padding: 0;
+          margin: 0;
+        "
       >
         <div
           cdkDropList

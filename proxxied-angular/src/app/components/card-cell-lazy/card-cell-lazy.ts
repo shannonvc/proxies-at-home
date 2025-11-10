@@ -28,7 +28,7 @@ export class CardCellLazyComponent {
             observer.disconnect();
           }
         },
-        { rootMargin: '400px' }
+        { rootMargin: '400px' },
       );
       observer.observe(this.ref.nativeElement);
     });
