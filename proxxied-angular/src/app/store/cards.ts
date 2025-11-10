@@ -68,4 +68,20 @@ export class CardsService {
       selectedImages: { ...state.selectedImages, ...newImages },
     }));
   }
+
+  clearSelectedImage(uuid: string) {
+    this._state.update(state => {
+      const newSelected = { ...state.selectedImages };
+      delete newSelected[uuid];
+      return { ...state, selectedImages: newSelected };
+    });
+  }
+
+  clearManySelectedImages(uuids: string[]) {
+    this._state.update(state => {
+      const newSelected = { ...state.selectedImages };
+      for (const uuid of uuids) delete newSelected[uuid];
+      return { ...state, selectedImages: newSelected };
+    });
+  }
 }

@@ -7,7 +7,9 @@ import { CardOption } from '../../store/card.types';
 import { ArtworkModalService } from '../../store/artwork-modal';
 import { EdgeCutLinesComponent } from '../edge-cut-lines/edge-cut-lines';
 import { ArtworkModalComponent } from '../artwork-modal/artwork-modal';
-import { SortableCardComponent } from '../sortable-card/sortable-card';
+import { CardCellLazyComponent } from '../card-cell-lazy/card-cell-lazy';
+import { imageProcessor } from '../../helpers/imageProcessor';
+import { environment } from '../../../environments/environment';
 
 const unit = 'mm';
 const baseCardWidthMm = 63;
@@ -15,7 +17,7 @@ const baseCardHeightMm = 88;
 
 @Component({
   selector: 'app-page-view',
-  imports: [CommonModule, DragDropModule, EdgeCutLinesComponent, ArtworkModalComponent, SortableCardComponent],
+  imports: [CommonModule, DragDropModule, EdgeCutLinesComponent, ArtworkModalComponent, CardCellLazyComponent],
   templateUrl: './page-view.html',
   styleUrl: './page-view.scss',
 })
@@ -61,20 +63,51 @@ export class PageViewComponent {
   });
 
   drop(event: CdkDragDrop<CardOption[]>) {
+    const allCards = [...this.cardsService.state().cards];
+    const pageCapacity = this.pageCapacity();
+
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      // Dragging within the same page
+      const pageIndex = parseInt(event.container.id.replace('page-', ''), 10);
+      const globalPreviousIndex = pageIndex * pageCapacity + event.previousIndex;
+      const globalCurrentIndex = pageIndex * pageCapacity + event.currentIndex;
+      moveItemInArray(allCards, globalPreviousIndex, globalCurrentIndex);
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
+      // Dragging between different pages
+      const movedCard = event.item.data;
+
+      const previousPageIndex = parseInt(event.previousContainer.id.replace('page-', ''), 10);
+      const globalPreviousIndex = previousPageIndex * pageCapacity + event.previousIndex;
+
+      const currentPageIndex = parseInt(event.container.id.replace('page-', ''), 10);
+      const globalCurrentIndex = currentPageIndex * pageCapacity + event.currentIndex;
+
+      // Remove from old position
+      allCards.splice(globalPreviousIndex, 1);
+      // Insert into new position
+      allCards.splice(globalCurrentIndex, 0, movedCard);
     }
+    this.cardsService.setCards(allCards);
   }
 
   duplicateCard(index: number) {
-    // TODO: Implement
+    const cardToCopy = this.cards()[index];
+    const newCard = { ...cardToCopy, uuid: crypto.randomUUID() };
+
+    const newCards = [...this.cards()];
+    newCards.splice(index + 1, 0, newCard);
+    this.cardsService.setCards(newCards);
+
+    const original = this.cardsService.state().originalSelectedImages[cardToCopy.uuid];
+    const processed = this.cardsService.state().selectedImages[cardToCopy.uuid];
+
+    this.cardsService.appendOriginalSelectedImages({
+      [newCard.uuid]: original,
+    });
+
+    this.cardsService.appendSelectedImages({
+      [newCard.uuid]: processed,
+    });
   }
 
   deleteCard(index: number) {
@@ -96,5 +129,29 @@ export class PageViewComponent {
       y: event.clientY,
       cardIndex: index,
     });
+  }
+
+  async ensureProcessed(card: CardOption) {
+    const originalUrl = this.cardsService.state().originalSelectedImages[card.uuid];
+    if (!originalUrl) return;
+
+    const { processedBlob, error } = await imageProcessor.process({
+      uuid: card.uuid,
+      url: originalUrl,
+      bleedEdgeWidth: this.bleedEdgeWidth(),
+      unit: unit,
+      apiBase: environment.API_BASE,
+      isUserUpload: card.isUserUpload,
+      hasBakedBleed: card.hasBakedBleed,
+    });
+
+    if (error) {
+      console.error(`Error processing image ${card.uuid}:`, error);
+      // TODO: Set card state to error
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(processedBlob);
+    this.cardsService.appendSelectedImages({ [card.uuid]: objectUrl });
   }
 }

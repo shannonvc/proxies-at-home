@@ -1,0 +1,13 @@
+<div #ref class="relative">
+  <div *ngIf="!hasImage && state() !== 'error'" class="absolute inset-0 grid place-items-center z-10">
+    <div class="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-transparent"></div>
+  </div>
+  <div *ngIf="state() === 'error' && !hasImage" class="absolute inset-0 grid place-items-center z-10">
+    <div class="px-2 py-1 text-xs bg-red-600 text-white rounded">
+      load failed — click to retry
+    </div>
+  </div>
+  <div (click)="onClick()">
+    <ng-content></ng-content>
+  </div>
+</div>

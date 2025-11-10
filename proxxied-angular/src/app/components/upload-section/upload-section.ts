@@ -10,6 +10,7 @@ import axios from 'axios';
 import { imageProcessor } from '../../helpers/imageProcessor';
 import { getMpcImageUrl, inferCardNameFromFilename, parseMpcText, tryParseMpcSchemaXml } from '../../helpers/Mpc';
 import { cardKey, CardInfo, parseDeckToInfos } from '../../helpers/CardInfoHelper';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-upload-section',
@@ -78,7 +79,7 @@ export class UploadSectionComponent {
       url: srcBase64,
       bleedEdgeWidth: this.settingsService.state().bleedEdgeWidth,
       unit: 'mm',
-      apiBase: 'http://localhost:3000', // TODO: Get from environment
+      apiBase: environment.API_BASE,
       isUserUpload: true,
       hasBakedBleed: opts.hasBakedBleed,
     });
@@ -188,13 +189,13 @@ export class UploadSectionComponent {
       const uniqueNames = Array.from(new Set(uniqueInfos.map((ci) => ci.name)));
 
       try {
-        await axios.delete(`http://localhost:3000/api/cards/images`, { timeout: 15000 });
+        await axios.delete(`${environment.API_BASE}/api/cards/images`, { timeout: 15000 });
       } catch (e) {
         console.warn('[FetchCards] DELETE failed (continuing):', e);
       }
 
       const response = await fetch(
-        `http://localhost:3000/api/cards/images/images-stream`,
+        `${environment.API_BASE}/api/cards/images/images-stream`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -364,7 +365,7 @@ export class UploadSectionComponent {
               url,
               bleedEdgeWidth: this.settingsService.state().bleedEdgeWidth,
               unit: 'mm',
-              apiBase: 'http://localhost:3000', // TODO: Get from environment
+              apiBase: environment.API_BASE,
               isUserUpload: card?.isUserUpload,
               hasBakedBleed: card?.hasBakedBleed,
             });

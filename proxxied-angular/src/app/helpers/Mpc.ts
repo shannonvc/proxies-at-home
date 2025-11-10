@@ -1,3 +1,5 @@
+import { environment } from '../../environments/environment';
+
 export function inferCardNameFromFilename(filename: string): string {
   const noExt = filename.replace(/\.[a-z0-9]+$/i, "");
   const beforeParen = noExt.split("(")[0];
@@ -18,7 +20,7 @@ type MpcItem = {
 
 export function getMpcImageUrl(frontId?: string | null): string | null {
   if (!frontId) return null;
-  return `http://localhost:3000/api/cards/images/front?id=${encodeURIComponent(frontId)}`;
+  return `${environment.API_BASE}/api/cards/images/front?id=${encodeURIComponent(frontId)}`;
 }
 
 export function extractDriveId(

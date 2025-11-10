@@ -5,6 +5,8 @@ import { ArtworkModalService } from '../../store/artwork-modal';
 import { CardsService } from '../../store/cards';
 import axios from 'axios';
 import { CardOption } from '../../store/card.types';
+import { getLocalBleedImageUrl } from '../../helpers/ImageHelper';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-artwork-modal',
@@ -40,7 +42,7 @@ export class ArtworkModalComponent {
     this.isGettingMore = true;
     try {
       const res = await axios.post<CardOption[]>(
-        `http://localhost:3000/api/cards/images`,
+        `${environment.API_BASE}/api/cards/images`,
         { cardNames: [card.name], cardArt: 'prints' }
       );
 
@@ -51,12 +53,72 @@ export class ArtworkModalComponent {
     }
   }
 
-  search() {
-    // TODO: Implement
+  async search() {
+    const name = this.searchQuery.trim();
+    const modalIndex = this.state().index;
+    if (!name || modalIndex === null) return;
+
+    const res = await axios.post<CardOption[]>(
+      `${environment.API_BASE}/api/cards/images`,
+      { cardNames: [name] }
+    );
+
+    if (!res.data.length) return;
+
+    const newCard = res.data[0];
+    if (!newCard.imageUrls?.length) return;
+
+    const newUuid = crypto.randomUUID();
+
+    this.cardsService.updateCard(modalIndex, {
+      uuid: newUuid,
+      name: newCard.name,
+      imageUrls: newCard.imageUrls,
+      isUserUpload: false,
+    });
+
+    this.artworkModalService.updateCard({
+      uuid: newUuid,
+      name: newCard.name,
+      imageUrls: newCard.imageUrls,
+      isUserUpload: false,
+    });
+
+    this.cardsService.appendOriginalSelectedImages({
+      [newUuid]: newCard.imageUrls[0],
+    });
+
+    this.cardsService.clearSelectedImage(newUuid);
+
+    this.searchQuery = '';
   }
 
-  selectImage(pngUrl: string) {
-    // TODO: Implement
+  async selectImage(pngUrl: string) {
+    const card = this.state().card;
+    if (!card) return;
+
+    if (this.applyToAll) {
+      const newOriginalSelectedImages: Record<string, string> = {};
+      const uuidsToClear: string[] = [];
+
+      const uuidsToUpdate = this.cardNamesToUuids()[card.name] || [];
+
+      uuidsToUpdate.forEach((uuid) => {
+        newOriginalSelectedImages[uuid] = pngUrl;
+        uuidsToClear.push(uuid);
+      });
+
+      this.cardsService.appendOriginalSelectedImages(newOriginalSelectedImages);
+      this.cardsService.clearManySelectedImages(uuidsToClear);
+    } else {
+      this.cardsService.appendOriginalSelectedImages({
+        [card.uuid]: pngUrl,
+      });
+
+      this.cardsService.clearSelectedImage(card.uuid);
+    }
+
+    this.closeModal();
   }
 
   closeModal() {

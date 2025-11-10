@@ -27,6 +27,8 @@
     *   **Signals:** For modern, fine-grained state management.
     *   **Standalone Components:** For a more modular and streamlined architecture.
     *   **Best Practices:** Adhere to modern Angular standards.
+    *   **Signal View Queries:** Use `viewChild`, `viewChildren`, `contentChild`, `contentChildren` for querying elements.
+    *   **New Control Flow:** Prefer `@for`, `@if`, `@switch` over `*ngFor`, `*ngIf`, `*ngSwitch`.
 
 ## Migration Plan Summary
 
@@ -53,3 +55,6 @@
 4.  **Key Files:**
     *   The main migration plan is located in `ANGULAR_MIGRATION_PLAN.md`.
     *   The original React application is in the `/client` directory.
+
+5.  **Verify (Standards):** VERY IMPORTANT: After making code changes, execute the project-specific build, linting and type-checking commands (e.g., 'tsc', 'npm run lint', 'ruff check .') that you have identified for this project (or obtained from the user). This ensures code quality and adherence to standards. If unsure about these commands, you can ask the user if they'd like you to run them and if so how to.
+    *   **Note:** When verifying Angular applications, use `ng build` instead of `ng serve` to check for compilation errors in a non-interactive environment.

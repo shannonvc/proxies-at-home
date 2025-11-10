@@ -47,13 +47,13 @@ This document outlines the plan to migrate the Proxxied React application to Ang
 
 ## 3. Migration Steps
 
-### Phase 1: Core Setup and Layout
+### Phase 1: [x] Core Setup and Layout
 
 1.  **Setup TailwindCSS and Flowbite:** Configure styling to match the current application.
 2.  **[x] Create the main layout:** Create a main `AppComponent` that will hold the main layout, including the header, sidebar, and main content area.
 3.  **[x] Setup routing:** Create the basic routes for the application. The main page will be the `ProxyBuilderPage`.
 
-### Phase 2: Feature Migration
+### Phase 2: [x] Feature Migration
 
 This will be an iterative process of migrating each feature from the React application to the new Angular application.
 
@@ -63,18 +63,23 @@ This will be an iterative process of migrating each feature from the React appli
     *   `loading.ts`: Create a `LoadingService` to manage the loading state of the application.
     *   `artworkModal.ts`: Create a service to manage the state of the artwork modal.
 
-2.  **Components (`/components`):**
+2.  **[x] Components (`/components`):**
     *   Migrate each React component to an Angular standalone component.
     *   Prioritize migrating the main components first, such as `PageView`, `UploadSection`, and `PageSettingsControls`.
     *   Replace React-specific hooks and libraries with Angular equivalents (e.g., `@dnd-kit` with `@angular/cdk/drag-drop`).
 
-3.  **Helpers (`/helpers`):**
+3.  **[x] Helpers (`/helpers`):**
     *   The helper functions are mostly plain TypeScript and can be migrated with minimal changes.
     *   We will need to adapt the code that interacts with the DOM or framework-specific APIs.
     *   The web workers (`bleed.worker.ts`, `pdf.worker.ts`) can be reused. We will need to set up the Angular `web-worker` configuration.
 
-4.  **Pages (`/pages`):**
+4.  **[x] Pages (`/pages`):**
     *   `ProxyBuilderPage.tsx`: This is the main page of the application. We will create a new `ProxyBuilderPageComponent` and compose it from the migrated components.
+
+### Phase 3: [x] Styling Refinement
+
+1.  **[x] Custom Scrollbar Styles:** Add custom scrollbar styles from the React application to the Angular application.
+2.  **[x] Overall Styling:** Ensure that the overall styling matches the original React application.
 
 ### Phase 4: Testing
 

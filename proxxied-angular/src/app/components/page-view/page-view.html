@@ -55,6 +55,7 @@
         <div
           cdkDropList
           [cdkDropListData]="page"
+          [id]="'page-' + pageIndex"
           class="grid"
           [style.gridTemplateColumns]="'repeat(' + columns() + ', ' + totalCardWidth() + 'mm)'"
           [style.gridTemplateRows]="'repeat(' + rows() + ', ' + totalCardHeight() + 'mm)'"
@@ -64,13 +65,15 @@
           (cdkDropListDropped)="drop($event)"
         >
           <div *ngFor="let card of page; let index = index" cdkDrag [cdkDragData]="card">
-            <app-sortable-card
+            <app-card-cell-lazy
               [card]="card"
               [imageSrc]="selectedImages()[card.uuid]"
               [totalCardWidth]="totalCardWidth()"
               [totalCardHeight]="totalCardHeight()"
+              [hasImage]="!!selectedImages()[card.uuid]"
+              [ensureProcessed]="ensureProcessed"
               (contextmenu)="onContextMenu($event, pageIndex * pageCapacity() + index)"
-            ></app-sortable-card>
+            ></app-card-cell-lazy>
           </div>
         </div>
         <app-edge-cut-lines
